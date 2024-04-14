@@ -1,0 +1,94 @@
+<template>
+    <v-data-table :headers="headers" :items="listaDocumentos" :items-per-page="registrosPorPagina">
+        <template v-slot:top>
+            <v-toolbar>
+                <v-toolbar-title>Lista de Documentos</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+                <IndexFormularioDocumento></IndexFormularioDocumento>
+            </v-toolbar>
+        </template>
+
+        <template v-slot:item.actions="{ item }">
+            <v-icon @click="editItem(item)">
+                mdi-pencil
+            </v-icon>
+            <v-icon @click="deleteItem(item)">
+                mdi-delete
+            </v-icon>
+            <v-icon @click="verDocumento()">
+                mdi-file-document-outline
+            </v-icon>
+        </template>
+
+        <template v-slot:no-data>
+            <v-tooltip text="No hay registros">
+                <template v-slot:activator="{ props }">
+                    <v-badge color="error" dot>
+                        <v-icon v-bind="props" icon="mdi-inbox"></v-icon>
+                    </v-badge>
+                </template>
+            </v-tooltip>
+        </template>
+
+    </v-data-table>
+</template>
+
+<script lang="ts">
+import axios from 'axios';
+
+export default {
+    data: () => ({
+        dialog: false,
+        dialogDelete: false,
+        headers: [
+            { title: 'Nombre', key: 'nombre', },
+            { title: 'Región', key: 'region' },
+            { title: 'Categoría', key: 'categoria' },
+            { title: 'Grado', key: 'grado' },
+            { title: 'Acciones', key: 'actions', sortable: false },
+        ],
+        listaDocumentos: [],
+    }),
+    props:{
+        registrosPorPagina: {
+            type: Number,
+            required: true
+        }
+    },
+
+    computed: {
+    },
+
+    watch: {
+    },
+
+    created() {
+        this.initialize()
+    },
+
+    methods: {
+        verDocumento(){
+
+        },
+        async initialize() {
+            try {
+                const response = await axios.get('http://localhost:3001/ObtenerDocuementos');
+                this.listaDocumentos = response.data;
+            } catch (error) {
+                console.error('Error al cargar los datos:', error);
+            }
+        },
+        editItem(item:any) {
+            console.log('editar item: ' + item);
+            
+      },
+
+      deleteItem(item:any) {
+        console.log('borrar: ' + item);
+        
+      },
+    },
+}
+</script>
