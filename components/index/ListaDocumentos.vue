@@ -36,7 +36,6 @@
 </template>
 
 <script lang="ts">
-//import axios from 'axios';
 import { useDocumentoStore } from '~/store/DocumentoStore';
 import type { Documento } from '~/models/Documento';
 
@@ -68,16 +67,6 @@ export default {
     },
 
     methods: {
-
-        async initialize() {
-            
-            // try {
-            //     const response = await axios.get('http://localhost:3001/ObtenerDocuementos');
-            //     this.listaDocumentos = response.data;
-            // } catch (error) {
-            //     console.error('Error al cargar los datos:', error);
-            // }
-        },
         verDocumento() {
 
         },
