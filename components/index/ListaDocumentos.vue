@@ -36,7 +36,9 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios';
+//import axios from 'axios';
+import { useDocumentoStore } from '~/store/DocumentoStore';
+import type { Documento } from '~/models/Documento';
 
 export default {
     data: () => ({
@@ -47,48 +49,47 @@ export default {
             { title: 'Región', key: 'region' },
             { title: 'Categoría', key: 'categoria' },
             { title: 'Grado', key: 'grado' },
-            { title: 'Acciones', key: 'actions', sortable: false },
+            { title: 'Descripcion', key:'descripcion'}
+           // { title: 'Acciones', key: 'actions', sortable: false },
         ],
-        listaDocumentos: [],
+        listaDocumentos: [] as Documento[],
     }),
-    props:{
+    props: {
         registrosPorPagina: {
             type: Number,
             required: true
         }
     },
-
-    computed: {
-    },
-
-    watch: {
-    },
-
     created() {
-        this.initialize()
+        const documentoStore = useDocumentoStore();
+        documentoStore.obtenerDocumentos().then(() => {
+            this.listaDocumentos = documentoStore.documentos;
+        });
     },
 
     methods: {
-        verDocumento(){
 
-        },
         async initialize() {
-            try {
-                const response = await axios.get('http://localhost:3001/ObtenerDocuementos');
-                this.listaDocumentos = response.data;
-            } catch (error) {
-                console.error('Error al cargar los datos:', error);
-            }
-        },
-        editItem(item:any) {
-            console.log('editar item: ' + item);
             
-      },
+            // try {
+            //     const response = await axios.get('http://localhost:3001/ObtenerDocuementos');
+            //     this.listaDocumentos = response.data;
+            // } catch (error) {
+            //     console.error('Error al cargar los datos:', error);
+            // }
+        },
+        verDocumento() {
 
-      deleteItem(item:any) {
-        console.log('borrar: ' + item);
-        
-      },
+        },
+        editItem(item: any) {
+            console.log('editar item: ' + item);
+
+        },
+
+        deleteItem(item: any) {
+            console.log('borrar: ' + item);
+
+        },
     },
 }
 </script>

@@ -8,20 +8,23 @@
                 <v-card-text>
                     <v-row>
                         <v-col cols="12" md="4" sm="6">
-                            <v-text-field label="Nombre*" :rules="documentoRules" required></v-text-field>
+                            <v-text-field v-model="nombre" label="Nombre*" :rules="documentoRules" required></v-text-field>
                         </v-col>
                         <v-col cols="12" md="4" sm="6">
-                            <v-text-field label="Region*" :rules="documentoRules" required></v-text-field>
+                            <v-text-field v-model="region" label="Region*" :rules="documentoRules" required></v-text-field>
                         </v-col>
                         <v-col cols="12" md="4" sm="6">
-                            <v-text-field label="Categoria*" :rules="documentoRules" required></v-text-field>
+                            <v-text-field v-model="categoria" label="Categoria*" :rules="documentoRules" required></v-text-field>
                         </v-col>
                         <v-col cols="12" md="4" sm="6">
-                            <v-text-field label="Grado*" :rules="documentoRules" required></v-text-field>
+                            <v-text-field v-model="grado" label="Grado*" :rules="documentoRules" required></v-text-field>
                         </v-col>
                         <v-col cols="12" md="4" sm="6">
                             <v-file-input ref="pdf" :rules="archivoRules" accept="application/pdf"
                                 label="Adjuntar Archivo"></v-file-input>
+                        </v-col>
+                        <v-col cols="12" md="4" sm="6">
+                            <v-text-field v-model="descripcion" label="Descripción*" :rules="documentoRules" required></v-text-field>
                         </v-col>
                     </v-row>
                     <small class="text-caption text-medium-emphasis">*indica campo obligatorio</small>
@@ -49,6 +52,7 @@ export default defineComponent({
             region: '',
             categoria: '',
             grado: '',
+            descripcion: '',
             archivoRules: [
                 (value: string) => {
                     if (value != null && value.length > 0) return true;
@@ -78,6 +82,9 @@ export default defineComponent({
             formData.append('categoria', this.categoria);
             formData.append('grado', this.grado);
             formData.append('pdf', pdfInput.files[0]);
+            formData.append('descripcion', this.descripcion)
+
+            console.log(formData)
 
             try {
                 const response = await axios.post('http://localhost:3001/GuardarDocumento', formData, {
@@ -89,6 +96,7 @@ export default defineComponent({
             } catch (error) {
                 console.error('Error al enviar la solicitud:', error);
             }
+            this.dialog = false;
         }
     }
 });
