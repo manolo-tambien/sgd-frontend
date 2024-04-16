@@ -1,4 +1,5 @@
 <template>
+
     <v-data-table :headers="headers" :items="listaDocumentos" :items-per-page="registrosPorPagina">
         <template v-slot:top>
             <v-toolbar>
@@ -6,18 +7,12 @@
 
                 <v-spacer></v-spacer>
 
-                <IndexFormularioDocumento></IndexFormularioDocumento>
+                <IndexFormularioDocumento @actualizarTableEvento="actualizarTabla"></IndexFormularioDocumento>
             </v-toolbar>
         </template>
 
         <template v-slot:item.actions="{ item }">
-            <v-icon @click="editItem(item)">
-                mdi-pencil
-            </v-icon>
-            <v-icon @click="deleteItem(item)">
-                mdi-delete
-            </v-icon>
-            <v-icon @click="verDocumento()">
+            <v-icon @click="verDocumento(item)">
                 mdi-file-document-outline
             </v-icon>
         </template>
@@ -33,26 +28,34 @@
         </template>
 
     </v-data-table>
+    <IndexTarjetaDocumento @cerraModalEvent="cerrarModalTarjeta" :showModalTarjeta="showModalTarjeta"
+        :nombre="documentoEnEdicion.nombre" :categoria="documentoEnEdicion.categoria"
+        :descripcion="documentoEnEdicion.descripcion" :grado="documentoEnEdicion.grado"
+        :region="documentoEnEdicion.region">
+    </IndexTarjetaDocumento>
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
 import { useDocumentoStore } from '~/store/DocumentoStore';
 import type { Documento } from '~/models/Documento';
 
-export default {
-    data: () => ({
-        dialog: false,
-        dialogDelete: false,
-        headers: [
-            { title: 'Nombre', key: 'nombre', },
-            { title: 'Región', key: 'region' },
-            { title: 'Categoría', key: 'categoria' },
-            { title: 'Grado', key: 'grado' },
-            { title: 'Descripcion', key:'descripcion'}
-           // { title: 'Acciones', key: 'actions', sortable: false },
-        ],
-        listaDocumentos: [] as Documento[],
-    }),
+export default defineComponent({
+    data() {
+        return {
+            headers: [
+                { title: 'Nombre', key: 'nombre', },
+                { title: 'Región', key: 'region' },
+                { title: 'Categoría', key: 'categoria' },
+                { title: 'Grado', key: 'grado' },
+                { title: 'Descripcion', key: 'descripcion' },
+                { title: 'Acciones', key: 'actions', sortable: false },
+            ],
+            listaDocumentos: [] as Documento[],
+            documentoEnEdicion: {} as Documento,
+            showModalTarjeta: false,
+        };
+    },
     props: {
         registrosPorPagina: {
             type: Number,
@@ -60,25 +63,24 @@ export default {
         }
     },
     created() {
-        const documentoStore = useDocumentoStore();
-        documentoStore.obtenerDocumentos().then(() => {
-            this.listaDocumentos = documentoStore.documentos;
-        });
+        this.actualizarTabla()
     },
 
     methods: {
-        verDocumento() {
-
+        cerrarModalTarjeta() {
+            this.showModalTarjeta = false
         },
-        editItem(item: any) {
-            console.log('editar item: ' + item);
-
+        verDocumento(item: Documento) {
+            console.log(typeof item);
+            this.documentoEnEdicion = item
+            this.showModalTarjeta = true
         },
-
-        deleteItem(item: any) {
-            console.log('borrar: ' + item);
-
-        },
+        actualizarTabla() {
+            const documentoStore = useDocumentoStore();
+            documentoStore.obtenerDocumentos().then(() => {
+                this.listaDocumentos = documentoStore.documentos;
+            });
+        }
     },
-}
+});
 </script>
