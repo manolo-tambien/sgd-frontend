@@ -10,29 +10,27 @@
                     <v-card-text>
                         <v-row>
                             <v-col cols="12" md="4" sm="6">
-                                <v-text-field v-model="nombre" label="Nombre*" required></v-text-field>
-                            </v-col>
-
-                            <v-col cols="12" md="4" sm="6">
-                                <v-text-field hint="example of helper text only on focus"
-                                    label="Region" v-model="region"></v-text-field>
-                            </v-col>
-
-                            <v-col cols="12" md="4" sm="6">
-                                <v-text-field label="Categoría" v-model="categoria"
+                                <v-text-field v-model="documentoEnEdicion.nombre" label="Nombre*"
                                     required></v-text-field>
                             </v-col>
 
                             <v-col cols="12" md="4" sm="6">
-                                <v-text-field label="Grado*" v-model="grado" required></v-text-field>
+                                <v-text-field label="Region"
+                                    v-model="documentoEnEdicion.region"></v-text-field>
                             </v-col>
 
                             <v-col cols="12" md="4" sm="6">
-                                <v-text-field label="Descripción*" v-model="descripcion" required></v-text-field>
+                                <v-text-field label="Categoría" v-model="documentoEnEdicion.categoria"
+                                    required></v-text-field>
                             </v-col>
 
                             <v-col cols="12" md="4" sm="6">
-                                <v-text-field label="Confirm Password*" required></v-text-field>
+                                <v-text-field label="Grado*" v-model="documentoEnEdicion.grado" required></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12" md="4" sm="6">
+                                <v-text-field label="Descripción*" v-model="documentoEnEdicion.descripcion"
+                                    required></v-text-field>
                             </v-col>
                         </v-row>
 
@@ -57,7 +55,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-
 // Duda defineComponent
 export default defineComponent({
     data() {
@@ -70,24 +67,8 @@ export default defineComponent({
             type: Boolean,
             required: true
         },
-        nombre: {
-            type: String,
-            required: true
-        },
-        region: {
-            type: String,
-            required: true
-        },
-        categoria: {
-            type: String,
-            required: true
-        },
-        grado: {
-            type: String,
-            required: true
-        },
-        descripcion: {
-            type: String,
+        documentoEnEdicion: {
+            type: Object,
             required: true
         }
     },
@@ -96,13 +77,10 @@ export default defineComponent({
             this.$emit('cerraModalEvent')
         },
         GuardarCambiosDocumento() {
-            try {
-                console.log('Cambios guardados');
-            } catch (error) {
-                
-            } finally{
-                this.$emit('cerraModalEvent')
-            }
+
+            this.$emit('guardarCambiosDocumentoEvento')
+            this.$emit('cerraModalEvent')
+
         }
     },
 });

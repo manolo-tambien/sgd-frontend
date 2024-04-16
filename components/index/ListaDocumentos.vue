@@ -28,10 +28,9 @@
         </template>
 
     </v-data-table>
-    <IndexTarjetaDocumento @cerraModalEvent="cerrarModalTarjeta" :showModalTarjeta="showModalTarjeta"
-        :nombre="documentoEnEdicion.nombre" :categoria="documentoEnEdicion.categoria"
-        :descripcion="documentoEnEdicion.descripcion" :grado="documentoEnEdicion.grado"
-        :region="documentoEnEdicion.region">
+    <IndexTarjetaDocumento @cerraModalEvent="cerrarModalTarjeta" @actualizarTableEvento="actualizarTabla"
+        @guardarCambiosDocumentoEvento="guardarCambiosDeDocumento" :showModalTarjeta="showModalTarjeta"
+        :documentoEnEdicion="documentoEnEdicion">
     </IndexTarjetaDocumento>
 </template>
 
@@ -71,7 +70,6 @@ export default defineComponent({
             this.showModalTarjeta = false
         },
         verDocumento(item: Documento) {
-            console.log(typeof item);
             this.documentoEnEdicion = item
             this.showModalTarjeta = true
         },
@@ -79,6 +77,12 @@ export default defineComponent({
             const documentoStore = useDocumentoStore();
             documentoStore.obtenerDocumentos().then(() => {
                 this.listaDocumentos = documentoStore.documentos;
+            });
+        },
+        guardarCambiosDeDocumento() {
+            const documentoStore = useDocumentoStore();
+            documentoStore.guardarCambiosDocumento(this.documentoEnEdicion).then(() => {
+                this.actualizarTabla()
             });
         }
     },

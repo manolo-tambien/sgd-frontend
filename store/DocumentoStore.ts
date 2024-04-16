@@ -12,6 +12,10 @@ export const useDocumentoStore = defineStore({
     async obtenerDocumentos() {
       const documentos = await DocumentoService.ObtenerDocumentos();
       this.documentos = documentos;
+    },
+
+    async guardarCambiosDocumento(documento: Documento){
+      const documentoGuardado = await DocumentoService.GuardarCambiosDocumento(documento);
     }
   }
 });

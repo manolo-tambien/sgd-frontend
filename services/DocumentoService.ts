@@ -8,4 +8,15 @@ export class DocumentoService{
         const response = await axios.get<Documento[]>(`${BASE_URL}/ObtenerDocumentos`)
         return response.data;
     }
+    
+    static async GuardarCambiosDocumento(documento: Documento): Promise<void> {
+        try {
+            await axios.put(`${BASE_URL}/GuardarCambiosDocumento/${documento._id}`, documento);
+            console.log('Cambios guardados');
+        } catch (error) {
+            console.error('Error al guardar los cambios:', error);
+            throw error;
+        }
+    }
+    
 }
