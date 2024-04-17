@@ -47,7 +47,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios'
+import { useDocumentoStore } from '~/store/DocumentoStore';
+
 
 // Duda defineComponent
 export default defineComponent({
@@ -75,34 +76,20 @@ export default defineComponent({
     },
     methods: {
         async GuardarDocumento() {
-            // Definir explícitamente el tipo de this.$refs.pdf
+            const documentoStore = useDocumentoStore();
             const pdfInput = this.$refs.pdf as HTMLInputElement;
             if (!pdfInput.files || pdfInput.files.length === 0) {
                 console.error('No se seleccionó ningún archivo.');
                 return;
             }
 
-            const formData = new FormData();
-            formData.append('nombre', this.nombre);
-            formData.append('region', this.region);
-            formData.append('categoria', this.categoria);
-            formData.append('grado', this.grado);
-            formData.append('pdf', pdfInput.files[0]);
-            formData.append('descripcion', this.descripcion)
+            documentoStore.crearDocumento(this.nombre, this.region, this.categoria, this.grado, this.descripcion, pdfInput.files[0]).then(() => {
+                this.showModalFormulario = false;
+                this.$emit('actualizarTableEvento')
+            });;
 
-            try {
-                const response = await axios.post('http://localhost:3001/GuardarDocumento', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-                this.$emit('altaDeDocumentoEvento')
-            } catch (error) {
-                console.error('Error al enviar la solicitud:', error);
-            }
-            this.showModalFormulario = false;
-            this.$emit('actualizarTableEvento')
-        }
+
+        },
     },
 });
 

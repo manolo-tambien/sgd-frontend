@@ -1,24 +1,29 @@
 <template>
 
-    <v-data-table :search="valorBuscado" :headers="columnasPorMostrar" :items="listaDocumentos" :items-per-page="registrosPorPagina">
+    <v-data-table :search="valorBuscado" :headers="columnasPorMostrar" :items="listaDocumentos"
+        :items-per-page="registrosPorPagina">
         <template v-slot:top>
             <v-toolbar>
                 <v-toolbar-title>Lista de Documentos</v-toolbar-title>
-
-                <v-text-field v-model="valorBuscado" label="Buscar" prepend-inner-icon="mdi-magnify" variant="outlined"
-                    hide-details single-line></v-text-field>
 
                 <v-spacer></v-spacer>
 
                 <IndexFormularioDocumento @altaDeDocumentoEvento="altaDeDocumento"
                     @actualizarTableEvento="actualizarTabla"></IndexFormularioDocumento>
             </v-toolbar>
+            <v-spacer></v-spacer>
+            <v-text-field class="pa-2" v-model="valorBuscado" label="Buscar" prepend-inner-icon="mdi-magnify"
+                variant="outlined" hide-details single-line></v-text-field>
         </template>
 
         <template v-slot:item.actions="{ item }">
-            <v-icon @click="verDocumento(item)">
-                mdi-file-document-outline
+            <v-icon @click="editarDocumento(item)">
+                mdi-file-edit-outline
             </v-icon>
+            <v-icon @click="verFichaCompleta(item)">
+                mdi-file-search-outline
+            </v-icon>
+
         </template>
 
         <template v-slot:no-data>
@@ -41,9 +46,12 @@
         @cerrarCustomModalEvento="cerrarCustomModal" :texto-card="textoCard" :titulo-card="tituloCard"
         :sub-titulo-card="subTituloCard" :color-card="colorCard"></CustomModal>
 
-    <v-btn @click="mostrarCustomModel = true">
+    <IndexFichaDocumento :documento="documentoParaMostrar" @cerrarModalFichaEvento="cerrarModalFicha"
+        :mostrar-modal-ficha-documento="mostrarModalFichaDocumento">
+    </IndexFichaDocumento>
+    <!-- <v-btn @click="mostrarCustomModel = true">
         Open Dialog
-    </v-btn>
+    </v-btn> -->
 </template>
 
 <script lang="ts">
@@ -67,7 +75,11 @@ export default defineComponent({
             tituloCard: "",
             subTituloCard: "",
             textoCard: "",
-            colorCard: ""
+            colorCard: "",
+
+            // Variables para el componente de FichaDocumento
+            mostrarModalFichaDocumento: false,
+            documentoParaMostrar: {} as Documento
         };
     },
     props: {
@@ -85,6 +97,13 @@ export default defineComponent({
     },
 
     methods: {
+        cerrarModalFicha() {
+            this.mostrarModalFichaDocumento = false
+        },
+        verFichaCompleta(documento: Documento) {
+            this.mostrarModalFichaDocumento = true
+            this.documentoParaMostrar = documento
+        },
         cerrarCustomModal() {
             this.mostrarCustomModel = false
         },
@@ -98,7 +117,7 @@ export default defineComponent({
             this.textoCard = "Tu documento ha sido guardado en base de datos"
             this.colorCard = "info"
         },
-        verDocumento(item: Documento) {
+        editarDocumento(item: Documento) {
             this.documentoEnEdicion = item
             this.showModalTarjeta = true
         },

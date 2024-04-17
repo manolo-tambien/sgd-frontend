@@ -9,6 +9,10 @@ export const useDocumentoStore = defineStore({
     documentos: [] as Documento[]
   }),
   actions: {
+    async crearDocumento(nombre: string, region: string, categoria: string, grado: string, descripcion: string, pdf: File) {
+      await DocumentoService.CrearDocumento(nombre, region, categoria, grado, descripcion, pdf);
+      await this.obtenerDocumentos(); // Actualizar la lista de documentos después de crear uno nuevo
+  },
     async obtenerDocumentos() {
       const documentos = await DocumentoService.ObtenerDocumentos();
       this.documentos = documentos;

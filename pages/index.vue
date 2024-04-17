@@ -10,6 +10,7 @@ export default defineComponent({
     data() {
         return {
             columnasPorMostra: [
+                { title: 'Nombre', key: 'nombre'},
                 { title: 'Descripcion', key: 'descripcion' },
                 { title: 'Acciones', key: 'actions', sortable: false },
             ]

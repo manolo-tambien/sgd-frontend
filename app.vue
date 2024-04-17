@@ -8,7 +8,12 @@
 
           <v-navigation-drawer>
             <v-list>
-              <v-list-item prepend-icon="mdi-information" title="Acerca de"></v-list-item>
+              <v-list-item link variant="elevated" prepend-icon="mdi-home" title="">
+                <NuxtLink to="/">Inicio</NuxtLink>
+              </v-list-item>
+              <v-list-item link variant="elevated" prepend-icon="mdi-information" title="">
+                <NuxtLink to="/acerca-de">Acerca de</NuxtLink>
+              </v-list-item>
             </v-list>
           </v-navigation-drawer>
 

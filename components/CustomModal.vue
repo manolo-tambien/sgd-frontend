@@ -7,7 +7,7 @@
                 :subtitle="subTituloCard"
                 :color="colorCard">
                 <template v-slot:actions>
-                    <v-btn class="" text="Cerrar" @click="CerrarCustomModal"></v-btn>
+                    <v-btn block text="Cerrar" @click="CerrarCustomModal"></v-btn>
                 </template>
             </v-card>
         </v-dialog>
