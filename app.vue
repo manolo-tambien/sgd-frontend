@@ -8,7 +8,7 @@
 
           <v-navigation-drawer>
             <v-list>
-              <v-list-item title="Elemento en Barra"></v-list-item>
+              <v-list-item prepend-icon="mdi-information" title="Acerca de"></v-list-item>
             </v-list>
           </v-navigation-drawer>
 

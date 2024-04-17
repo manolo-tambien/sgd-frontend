@@ -1,9 +1,12 @@
 <template>
 
-    <v-data-table :headers="headers" :items="listaDocumentos" :items-per-page="registrosPorPagina">
+    <v-data-table :search="valorBuscado" :headers="columnasPorMostrar" :items="listaDocumentos" :items-per-page="registrosPorPagina">
         <template v-slot:top>
             <v-toolbar>
                 <v-toolbar-title>Lista de Documentos</v-toolbar-title>
+
+                <v-text-field v-model="valorBuscado" label="Buscar" prepend-inner-icon="mdi-magnify" variant="outlined"
+                    hide-details single-line></v-text-field>
 
                 <v-spacer></v-spacer>
 
@@ -51,14 +54,7 @@ import type { Documento } from '~/models/Documento';
 export default defineComponent({
     data() {
         return {
-            headers: [
-                { title: 'Nombre', key: 'nombre', },
-                { title: 'Región', key: 'region' },
-                { title: 'Categoría', key: 'categoria' },
-                { title: 'Grado', key: 'grado' },
-                { title: 'Descripcion', key: 'descripcion' },
-                { title: 'Acciones', key: 'actions', sortable: false },
-            ],
+            valorBuscado: '',
             listaDocumentos: [] as Documento[],
             documentoEnEdicion: {} as Documento,
 
@@ -77,6 +73,10 @@ export default defineComponent({
     props: {
         registrosPorPagina: {
             type: Number,
+            required: true
+        },
+        columnasPorMostrar: {
+            type: Array as () => Array<{ title: string; key: string; sortable?: boolean }>,
             required: true
         }
     },
