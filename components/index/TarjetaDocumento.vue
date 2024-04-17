@@ -1,10 +1,6 @@
 <template>
     <div class="pa-4 text-center">
         <v-dialog v-model="showModalTarjeta" max-width="600">
-            <!-- <template v-slot:activator="{ props: activatorProps }">
-                <v-btn class="text-none font-weight-regular" prepend-icon="mdi-account" text="Edit Profile"
-                    variant="tonal" v-bind="activatorProps"></v-btn>
-            </template> -->
             <v-form @submit.prevent="GuardarCambiosDocumento">
                 <v-card prepend-icon="mdi-file-document-edit-outline" title="Modificar información">
                     <v-card-text>
@@ -15,8 +11,7 @@
                             </v-col>
 
                             <v-col cols="12" md="4" sm="6">
-                                <v-text-field label="Region"
-                                    v-model="documentoEnEdicion.region"></v-text-field>
+                                <v-text-field label="Region" v-model="documentoEnEdicion.region"></v-text-field>
                             </v-col>
 
                             <v-col cols="12" md="4" sm="6">
@@ -41,7 +36,7 @@
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
-
+                        <v-btn text="Eliminar" color="error" variant="plain" @click="BorrarDocumento"></v-btn>
                         <v-btn text="Cerrar" variant="plain" @click="CerrarDialogTarjeta"></v-btn>
 
                         <v-btn color="primary" text="Guardar" type="submit" variant="tonal"></v-btn>
@@ -55,7 +50,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-// Duda defineComponent
 export default defineComponent({
     data() {
         return {
@@ -73,11 +67,13 @@ export default defineComponent({
         }
     },
     methods: {
+        BorrarDocumento(){
+            this.$emit('eliminarDocumentoEvento')
+        },
         CerrarDialogTarjeta() {
             this.$emit('cerraModalEvent')
         },
         GuardarCambiosDocumento() {
-
             this.$emit('guardarCambiosDocumentoEvento')
             this.$emit('cerraModalEvent')
 

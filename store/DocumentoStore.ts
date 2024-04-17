@@ -16,6 +16,10 @@ export const useDocumentoStore = defineStore({
 
     async guardarCambiosDocumento(documento: Documento){
       const documentoGuardado = await DocumentoService.GuardarCambiosDocumento(documento);
+    },
+
+    async eliminarDocumento(documento: Documento){
+      const documentoEliminado = await DocumentoService.EliminarDocumento(documento);
     }
   }
 });

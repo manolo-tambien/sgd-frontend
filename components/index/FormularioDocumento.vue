@@ -96,7 +96,7 @@ export default defineComponent({
                         'Content-Type': 'multipart/form-data'
                     }
                 });
-                console.log('Respuesta del servidor:', response.data);
+                this.$emit('altaDeDocumentoEvento')
             } catch (error) {
                 console.error('Error al enviar la solicitud:', error);
             }

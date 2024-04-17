@@ -7,7 +7,8 @@
 
                 <v-spacer></v-spacer>
 
-                <IndexFormularioDocumento @actualizarTableEvento="actualizarTabla"></IndexFormularioDocumento>
+                <IndexFormularioDocumento @altaDeDocumentoEvento="altaDeDocumento"
+                    @actualizarTableEvento="actualizarTabla"></IndexFormularioDocumento>
             </v-toolbar>
         </template>
 
@@ -30,8 +31,16 @@
     </v-data-table>
     <IndexTarjetaDocumento @cerraModalEvent="cerrarModalTarjeta" @actualizarTableEvento="actualizarTabla"
         @guardarCambiosDocumentoEvento="guardarCambiosDeDocumento" :showModalTarjeta="showModalTarjeta"
-        :documentoEnEdicion="documentoEnEdicion">
+        :documentoEnEdicion="documentoEnEdicion" @eliminarDocumentoEvento="eliminarDocumento">
     </IndexTarjetaDocumento>
+
+    <CustomModal :prependIcon="prependIcon" :mostrarCustomModal="mostrarCustomModel"
+        @cerrarCustomModalEvento="cerrarCustomModal" :texto-card="textoCard" :titulo-card="tituloCard"
+        :sub-titulo-card="subTituloCard" :color-card="colorCard"></CustomModal>
+
+    <v-btn @click="mostrarCustomModel = true">
+        Open Dialog
+    </v-btn>
 </template>
 
 <script lang="ts">
@@ -52,7 +61,17 @@ export default defineComponent({
             ],
             listaDocumentos: [] as Documento[],
             documentoEnEdicion: {} as Documento,
+
+            // Variables para el componente de tarjeta
             showModalTarjeta: false,
+
+            // Variables para el componente de CustomModal
+            mostrarCustomModel: false,
+            prependIcon: "",
+            tituloCard: "",
+            subTituloCard: "",
+            textoCard: "",
+            colorCard: ""
         };
     },
     props: {
@@ -66,8 +85,18 @@ export default defineComponent({
     },
 
     methods: {
+        cerrarCustomModal() {
+            this.mostrarCustomModel = false
+        },
         cerrarModalTarjeta() {
             this.showModalTarjeta = false
+        },
+        altaDeDocumento() {
+            this.mostrarCustomModel = true
+            this.prependIcon = "mdi-check-underline"
+            this.tituloCard = "Alta de documento"
+            this.textoCard = "Tu documento ha sido guardado en base de datos"
+            this.colorCard = "info"
         },
         verDocumento(item: Documento) {
             this.documentoEnEdicion = item
@@ -83,8 +112,29 @@ export default defineComponent({
             const documentoStore = useDocumentoStore();
             documentoStore.guardarCambiosDocumento(this.documentoEnEdicion).then(() => {
                 this.actualizarTabla()
+
+                // Confirma al usuario que se guardó el documento
+                this.mostrarCustomModel = true
+                this.prependIcon = "mdi-check-underline"
+                this.tituloCard = "Modificación de documento"
+                this.textoCard = "Tu documento ha sido actualizado en base de datos"
+                this.colorCard = "info"
             });
-        }
+        },
+        eliminarDocumento() {
+            const documentoStore = useDocumentoStore();
+            documentoStore.eliminarDocumento(this.documentoEnEdicion).then(() => {
+                this.showModalTarjeta = false
+                this.actualizarTabla()
+
+                // Indica al usuario que se borró el documento
+                this.mostrarCustomModel = true
+                this.prependIcon = "mdi-trash-can-outline"
+                this.tituloCard = "Eliminación de documento"
+                this.textoCard = "Tu documento ha sido borrado"
+                this.colorCard = "error"
+            });
+        },
     },
 });
 </script>
