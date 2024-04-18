@@ -86,6 +86,7 @@ export default defineComponent({
             documentoStore.crearDocumento(this.nombre, this.region, this.categoria, this.grado, this.descripcion, pdfInput.files[0]).then(() => {
                 this.showModalFormulario = false;
                 this.$emit('actualizarTableEvento')
+                this.$emit('altaDeDocumentoEvento')
             });;
 
 

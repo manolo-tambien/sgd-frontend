@@ -71,8 +71,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useDocumentoStore } from '~/store/DocumentoStore';
-import type { Documento } from '~/models/Documento';
 
 export default defineComponent({
     data() {
