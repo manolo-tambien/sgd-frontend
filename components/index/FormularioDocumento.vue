@@ -7,27 +7,27 @@
             <v-card title="Datos del documento">
                 <v-card-text>
                     <v-row>
-                        <v-col cols="12" md="4" sm="6">
+                        <v-col cols="12" md="6" sm="12">
                             <v-text-field v-model="nombre" label="Nombre*" :rules="documentoRules"
                                 required></v-text-field>
                         </v-col>
-                        <v-col cols="12" md="4" sm="6">
+                        <v-col cols="12" md="6" sm="12">
                             <v-text-field v-model="region" label="Region*" :rules="documentoRules"
                                 required></v-text-field>
                         </v-col>
-                        <v-col cols="12" md="4" sm="6">
+                        <v-col cols="12" md="6" sm="12">
                             <v-text-field v-model="categoria" label="Categoria*" :rules="documentoRules"
                                 required></v-text-field>
                         </v-col>
-                        <v-col cols="12" md="4" sm="6">
+                        <v-col cols="12" md="6" sm="12">
                             <v-text-field v-model="grado" label="Grado*" :rules="documentoRules"
                                 required></v-text-field>
                         </v-col>
-                        <v-col cols="12" md="4" sm="6">
+                        <v-col cols="12" md="6" sm="12">
                             <v-file-input ref="pdf" :rules="archivoRules" accept="application/pdf"
                                 label="Adjuntar Archivo"></v-file-input>
                         </v-col>
-                        <v-col cols="12" md="4" sm="6">
+                        <v-col cols="12" md="6" sm="12">
                             <v-text-field v-model="descripcion" label="Descripción*" :rules="documentoRules"
                                 required></v-text-field>
                         </v-col>
