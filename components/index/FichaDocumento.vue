@@ -1,5 +1,5 @@
 <template>
-    <v-dialog max-width="500" v-model="mostrarModalFichaDocumento">
+    <v-dialog v-model="mostrarModalFichaDocumento">
         <template v-slot:default>
             <v-card title="Ficha de Informacion del Documento">
                 <v-divider class=" mb-4"></v-divider>

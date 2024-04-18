@@ -1,7 +1,8 @@
 <template>
-    <v-container>
-        <IndexListaDocumentos :columnasPorMostrar="columnasPorMostra" :registrosPorPagina="6"></IndexListaDocumentos>
-    </v-container>
+
+    <IndexListaDocumentos :columnasPorMostrar="columnasPorMostrar" :registrosPorPagina="registrosPorPagina">
+    </IndexListaDocumentos>
+
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -9,11 +10,12 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     data() {
         return {
-            columnasPorMostra: [
-                { title: 'Nombre', key: 'nombre'},
+            columnasPorMostrar: [
+                { title: 'Nombre', key: 'nombre' },
                 { title: 'Descripcion', key: 'descripcion' },
                 { title: 'Acciones', key: 'actions', sortable: false },
-            ]
+            ],
+            registrosPorPagina: 6
         };
     }
 });

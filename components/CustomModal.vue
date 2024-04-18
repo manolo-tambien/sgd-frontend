@@ -1,7 +1,7 @@
 <template>
     <div class="text-center">
-        <v-dialog v-model="mostrarCustomModal" width="auto">
-            <v-card max-width="400" :prepend-icon="prependIcon"
+        <v-dialog v-model="mostrarCustomModal" max-width="400"><!--Solo aqui se queda estatico el ancho del modal> -->
+            <v-card :prepend-icon="prependIcon"
                 :text="textoCard"
                 :title="tituloCard"
                 :subtitle="subTituloCard"
