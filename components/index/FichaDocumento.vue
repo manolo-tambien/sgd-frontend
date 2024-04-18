@@ -46,6 +46,7 @@
                     </v-row>
                     
                     <v-divider class="mt-5 mb-4"></v-divider>
+                    <h4>Metadatos</h4>
 
                     <v-list class="bg-transparent">
                         <v-list-item  :subtitle="documento.pdf.filename" title="filename">
@@ -60,7 +61,8 @@
 
                 </v-card-text>
                 <v-card-actions>
-                    <v-btn block text="Cerrar" @click="cerrarModalFichaDocumento"></v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" variant="flat" text="Cerrar" @click="cerrarModalFichaDocumento"></v-btn>
                 </v-card-actions>
             </v-card>
 

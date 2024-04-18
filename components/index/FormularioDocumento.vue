@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="showModalFormulario">
         <template v-slot:activator="{ props: activatorProps }">
-            <v-btn prepend-icon="mdi-plus" text="Nuevo Documento" variant="tonal" v-bind="activatorProps"></v-btn>
+            <v-btn prepend-icon="mdi-plus" text="Nuevo Documento" color="primary" variant="flat" v-bind="activatorProps"></v-btn>
         </template>
         <v-form @submit.prevent="GuardarDocumento">
             <v-card title="Datos del documento">
@@ -37,8 +37,8 @@
                 <v-divider></v-divider>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text="Cerrar" variant="plain" @click="showModalFormulario = false"></v-btn>
-                    <v-btn color="primary" text="Guardar" variant="tonal" type="submit"></v-btn>
+                    <v-btn text="Cerrar" color="primary"   @click="showModalFormulario = false"></v-btn>
+                    <v-btn color="primary" text="Guardar" variant="flat" type="submit"></v-btn>
                 </v-card-actions>
             </v-card>
         </v-form>

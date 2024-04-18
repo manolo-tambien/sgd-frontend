@@ -4,11 +4,10 @@
       <template>
         <v-layout class="rounded rounded-md">
 
-          <v-app-bar color="info" :elevation="1">
+          <v-app-bar color="primary" :elevation="1">
             <v-app-bar-nav-icon variant="text"
               @click.stop="mostrarNavigationDrawer = !mostrarNavigationDrawer"></v-app-bar-nav-icon>
             <v-toolbar-title>Sistema de Gestión de Documentos</v-toolbar-title>
-            <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
 
           </v-app-bar>
 

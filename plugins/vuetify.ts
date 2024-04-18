@@ -6,19 +6,25 @@ import { es } from 'vuetify/locale'
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 
-import VDialog from 'vuetify/components/VDialog'
+
+
 
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
-     
-    locale:{
+
+    locale: {
       locale: 'es',
-      messages: {es}
+      messages: { es }
     },
-    defaults:{
-      VDialog:{
-        maxWidth: '600px'
-      }
+    defaults: {
+      
+        VDialog: {
+          maxWidth: '600px'
+        },
+        VBtn: {
+          variant: 'flat'
+        }
+      
     }
   })
   app.vueApp.use(vuetify)

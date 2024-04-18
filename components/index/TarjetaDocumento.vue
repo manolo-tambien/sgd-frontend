@@ -34,10 +34,9 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text="Eliminar" color="error" variant="plain" @click="BorrarDocumento"></v-btn>
-                    <v-btn text="Cerrar" variant="plain" @click="CerrarDialogTarjeta"></v-btn>
-
-                    <v-btn color="primary" text="Guardar" type="submit" variant="tonal"></v-btn>
+                    <v-btn text="Eliminar" color="error" variant="text" @click="BorrarDocumento"></v-btn>
+                    <v-btn text="Cerrar" variant="text" @click="CerrarDialogTarjeta"></v-btn>
+                    <v-btn color="primary" text="Guardar" type="submit" variant="flat"></v-btn>
                 </v-card-actions>
             </v-card>
         </v-form>
