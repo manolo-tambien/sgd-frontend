@@ -4,15 +4,17 @@ import type { Documento } from '~/models/Documento';
 const BASE_URL = "http://localhost:3001"
 
 export class DocumentoService {
-    static async CrearDocumento(nombre: string, region: string, categoria: string, grado: string, descripcion: string, pdf: File): Promise<void> {
+    static async CrearDocumento(documento: Documento, pdf: File): Promise<void> {
+         
         const formData = new FormData();
-        formData.append('nombre', nombre);
-        formData.append('region', region);
-        formData.append('categoria', categoria);
-        formData.append('grado', grado);
+        formData.append('nombre', documento.nombre);
+        formData.append('region', documento.region);
+        formData.append('categoria', documento.categoria);
+        formData.append('grado', documento.grado);
         formData.append('pdf', pdf);
-        formData.append('descripcion', descripcion);
+        formData.append('descripcion', documento.descripcion);
 
+         
         try {
             await axios.post(`${BASE_URL}/GuardarDocumento`, formData, {
                 headers: {

@@ -8,19 +8,19 @@
                 <v-card-text>
                     <v-row>
                         <v-col cols="12" md="6" sm="12">
-                            <v-text-field v-model="nombre" label="Nombre*" :rules="documentoRules"
+                            <v-text-field v-model="documentoEnEdicion.nombre" label="Nombre*" :rules="documentoRules"
                                 required></v-text-field>
                         </v-col>
                         <v-col cols="12" md="6" sm="12">
-                            <v-text-field v-model="region" label="Region*" :rules="documentoRules"
+                            <v-text-field v-model="documentoEnEdicion.region" label="Region*" :rules="documentoRules"
                                 required></v-text-field>
                         </v-col>
                         <v-col cols="12" md="6" sm="12">
-                            <v-text-field v-model="categoria" label="Categoria*" :rules="documentoRules"
+                            <v-text-field v-model="documentoEnEdicion.categoria" label="Categoria*" :rules="documentoRules"
                                 required></v-text-field>
                         </v-col>
                         <v-col cols="12" md="6" sm="12">
-                            <v-text-field v-model="grado" label="Grado*" :rules="documentoRules"
+                            <v-text-field v-model="documentoEnEdicion.grado" label="Grado*" :rules="documentoRules"
                                 required></v-text-field>
                         </v-col>
                         <v-col cols="12" md="6" sm="12">
@@ -28,7 +28,7 @@
                                 label="Adjuntar Archivo"></v-file-input>
                         </v-col>
                         <v-col cols="12" md="6" sm="12">
-                            <v-text-field v-model="descripcion" label="Descripción*" :rules="documentoRules"
+                            <v-text-field v-model="documentoEnEdicion.descripcion" label="Descripción*" :rules="documentoRules"
                                 required></v-text-field>
                         </v-col>
                     </v-row>
@@ -47,6 +47,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import type { Documento } from '~/models/Documento';
 import { useDocumentoStore } from '~/store/DocumentoStore';
 
 
@@ -54,6 +55,7 @@ import { useDocumentoStore } from '~/store/DocumentoStore';
 export default defineComponent({
     data() {
         return {
+            documentoEnEdicion: {} as Documento,
             nombre: '',
             showModalFormulario: false,
             region: '',
@@ -82,11 +84,16 @@ export default defineComponent({
                 console.error('No se seleccionó ningún archivo.');
                 return;
             }
-
-            documentoStore.crearDocumento(this.nombre, this.region, this.categoria, this.grado, this.descripcion, pdfInput.files[0]).then(() => {
+            documentoStore.crearDocumento(this.documentoEnEdicion, pdfInput.files[0]).then(() => {
                 this.showModalFormulario = false;
                 this.$emit('actualizarTableEvento')
                 this.$emit('altaDeDocumentoEvento')
+
+                this.documentoEnEdicion.nombre = ""
+                this.documentoEnEdicion.region = ""
+                this.documentoEnEdicion.categoria = ""
+                this.documentoEnEdicion.grado = ""
+                this.documentoEnEdicion.descripcion = ""
             });;
 
 

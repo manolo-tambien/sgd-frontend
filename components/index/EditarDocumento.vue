@@ -25,6 +25,12 @@
                             <v-text-field label="Descripción*" v-model="documentoEnEdicion.descripcion"
                                 required></v-text-field>
                         </v-col>
+                        <v-col cols="12" md="6" sm="12">
+
+                            <v-file-input ref="pdf" accept="application/pdf"
+                                label="Nuevo Documento"></v-file-input>
+                            <span>Documento actual:{{ documentoEnEdicion.pdf.filename }}</span>
+                        </v-col>
                     </v-row>
 
                     <small class="text-caption text-medium-emphasis">*indica que es obligatorio.</small>
@@ -34,7 +40,7 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text="Eliminar" color="error" variant="text" @click="BorrarDocumento"></v-btn>
+                    <v-btn text="Eliminar" color="error" variant="flat" @click="BorrarDocumento"></v-btn>
                     <v-btn text="Cerrar" variant="text" @click="CerrarDialogTarjeta"></v-btn>
                     <v-btn color="primary" text="Guardar" type="submit" variant="flat"></v-btn>
                 </v-card-actions>

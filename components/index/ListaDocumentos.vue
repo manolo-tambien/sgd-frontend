@@ -3,17 +3,35 @@
     <v-data-table :search="valorBuscado" :headers="columnasPorMostrar" :items="listaDocumentos"
         :items-per-page="registrosPorPagina">
         <template v-slot:top>
-            <v-toolbar>
-                <v-toolbar-title>Lista de Documentos</v-toolbar-title>
+            <v-row >
+                <v-col class="mb-4" cols="12" sm="12">
 
-                <v-spacer></v-spacer>
+                    <h2>Listado de Documentos</h2>
+                    <v-divider></v-divider>
+                </v-col>
+            </v-row>
+             <v-row > 
+                <v-col cols="12" md="4" sm="12">
+                    <v-text-field v-model="valorBuscado" label="Buscar" density="compact" :clearable="true" prepend-inner-icon="mdi-magnify"  
+                    hide-details></v-text-field>
+                </v-col>
+                <v-col cols="12" md="2" sm="12"></v-col>
+                <v-col class="text-right"  cols="12" md="6" sm="12">
+                      
+                    <IndexFormularioDocumento @altaDeDocumentoEvento="altaDeDocumento"
+                    @actualizarTableEvento="actualizarTabla"></IndexFormularioDocumento>    
+                    
+                </v-col>
+                
+             </v-row>
+                    
+                
+                    
+                
+         
+            
+                
 
-                <IndexFormularioDocumento @altaDeDocumentoEvento="altaDeDocumento"
-                    @actualizarTableEvento="actualizarTabla"></IndexFormularioDocumento>
-            </v-toolbar>
-            <v-spacer></v-spacer>
-            <v-text-field class="pa-2" v-model="valorBuscado" label="Buscar" prepend-inner-icon="mdi-magnify"
-                variant="outlined" hide-details single-line></v-text-field>
         </template>
 
         <template v-slot:item.actions="{ item }">
@@ -37,10 +55,10 @@
         </template>
 
     </v-data-table>
-    <IndexTarjetaDocumento @cerraModalEvent="cerrarModalTarjeta" @actualizarTableEvento="actualizarTabla"
+    <IndexEditarDocumento @cerraModalEvent="cerrarModalTarjeta" @actualizarTableEvento="actualizarTabla"
         @guardarCambiosDocumentoEvento="guardarCambiosDeDocumento" :showModalTarjeta="showModalTarjeta"
         :documentoEnEdicion="documentoEnEdicion" @eliminarDocumentoEvento="eliminarDocumento">
-    </IndexTarjetaDocumento>
+    </IndexEditarDocumento>
 
     <CustomModal :prependIcon="prependIcon" :mostrarCustomModal="mostrarCustomModel"
         @cerrarCustomModalEvento="cerrarCustomModal" :texto-card="textoCard" :titulo-card="tituloCard"
