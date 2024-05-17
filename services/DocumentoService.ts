@@ -42,6 +42,10 @@ export class DocumentoService {
         }
     }
 
+    static async GuardarCambiosDocumentoConPdf(documento: Documento, pdf: File): Promise<void>{
+
+    }
+
     static async EliminarDocumento(documento: Documento): Promise<void> {
         try {
             await axios.delete(`${BASE_URL}/EliminarDocumento/${documento._id}`);

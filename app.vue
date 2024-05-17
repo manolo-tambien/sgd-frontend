@@ -13,15 +13,17 @@
 
           <v-navigation-drawer v-model="mostrarNavigationDrawer">
             <v-list>
-              <v-list-item link href="/" variant="text" prepend-icon="mdi-home" title="Inicio">
+              <v-list-item :color="`black`" link href="/" variant="text" prepend-icon="mdi-home" title="Inicio">
               </v-list-item>
               <v-list-item link href="acerca-de" variant="text" prepend-icon="mdi-information" title="Acerca de">
               </v-list-item>
             </v-list>
           </v-navigation-drawer>
 
-          <v-main class="d-flex align-center justify-center">
-            <NuxtPage />
+          <v-main>
+            <v-container>
+              <NuxtPage />
+            </v-container>
           </v-main>
         </v-layout>
       </template>

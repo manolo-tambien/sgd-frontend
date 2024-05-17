@@ -22,8 +22,5 @@
     "@types/axios": "^0.14.0",
     "vite-plugin-vuetify": "^2.0.3",
     "vuetify": "^3.5.15"
-  },
-  "overrides": {
-    "vue": "latest"
   }
 }

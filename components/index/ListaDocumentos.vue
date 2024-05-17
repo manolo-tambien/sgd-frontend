@@ -3,35 +3,25 @@
     <v-data-table :search="valorBuscado" :headers="columnasPorMostrar" :items="listaDocumentos"
         :items-per-page="registrosPorPagina">
         <template v-slot:top>
-            <v-row >
-                <v-col class="mb-4" cols="12" sm="12">
-
+            <v-row>
+                <v-col cols="12" sm="12">
                     <h2>Listado de Documentos</h2>
                     <v-divider></v-divider>
                 </v-col>
             </v-row>
-             <v-row > 
-                <v-col cols="12" md="4" sm="12">
-                    <v-text-field v-model="valorBuscado" label="Buscar" density="compact" :clearable="true" prepend-inner-icon="mdi-magnify"  
-                    hide-details></v-text-field>
-                </v-col>
-                <v-col cols="12" md="2" sm="12"></v-col>
-                <v-col class="text-right"  cols="12" md="6" sm="12">
-                      
-                    <IndexFormularioDocumento @altaDeDocumentoEvento="altaDeDocumento"
-                    @actualizarTableEvento="actualizarTabla"></IndexFormularioDocumento>    
-                    
-                </v-col>
-                
-             </v-row>
-                    
-                
-                    
-                
-         
-            
-                
 
+            <v-row>
+                <v-col>
+                    <IndexFormularioDocumento @altaDeDocumentoEvento="altaDeDocumento"
+                        @actualizarTableEvento="actualizarTabla"></IndexFormularioDocumento>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col>
+                    <v-text-field v-model="valorBuscado" label="Buscar" density="comfortable" :clearable="true"
+                        prepend-inner-icon="mdi-magnify" hide-details></v-text-field>
+                </v-col>
+            </v-row>
         </template>
 
         <template v-slot:item.actions="{ item }">
@@ -40,6 +30,9 @@
             </v-icon>
             <v-icon @click="verFichaCompleta(item)">
                 mdi-file-search-outline
+            </v-icon>
+            <v-icon @click="verDocumentoEnPdf(item)">
+                mdi-file-pdf-box
             </v-icon>
 
         </template>
@@ -67,6 +60,9 @@
     <IndexFichaDocumento :documento="documentoParaMostrar" @cerrarModalFichaEvento="cerrarModalFicha"
         :mostrar-modal-ficha-documento="mostrarModalFichaDocumento">
     </IndexFichaDocumento>
+    <IndexVerDocumentoPDF :nombre-documento="nombreDocumentoRender"
+        @cerrarModalDocumentoPdfEvento="cerrarModalDocumentoPdf"
+        :mostrar-modal-ficha-documento="mostrarModalDocumentoPdf"></IndexVerDocumentoPDF>
     <!-- <v-btn @click="mostrarCustomModel = true">
         Open Dialog
     </v-btn> -->
@@ -97,7 +93,10 @@ export default defineComponent({
 
             // Variables para el componente de FichaDocumento
             mostrarModalFichaDocumento: false,
-            documentoParaMostrar: {} as Documento
+            documentoParaMostrar: {} as Documento,
+
+            mostrarModalDocumentoPdf: false,
+            nombreDocumentoRender: ""
         };
     },
     props: {
@@ -115,6 +114,13 @@ export default defineComponent({
     },
 
     methods: {
+        cerrarModalDocumentoPdf() {
+            this.mostrarModalDocumentoPdf = false
+        },
+        verDocumentoEnPdf(item: Documento) {
+            this.mostrarModalDocumentoPdf = true
+            this.nombreDocumentoRender = item.pdf.filename
+        },
         cerrarModalFicha() {
             this.mostrarModalFichaDocumento = false
         },
